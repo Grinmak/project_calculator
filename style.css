@@ -68,3 +68,6 @@ body {
     font-size: 60px;
 
 }
+.operator .divide {
+    content: \'00F7'\; 
+}
