@@ -7,8 +7,11 @@ const storeData = {};
 
 
 const result = document.querySelector('.result');
-const allButtons = document.querySelectorAll('button');
+const allButtons = document.getElementById('all_buttons').querySelectorAll('button');
 allButtons.forEach(btn => btn.addEventListener('click', getValue));
+
+const twoSpecialButton = document.getElementById('spec_btn').querySelectorAll('button');
+twoSpecialButton.forEach(btn => btn.addEventListener('click', getValueSpec));
 
 const displayLimit = 10;
 let countDigits = 0;
@@ -20,10 +23,6 @@ function getValue (event){
          countDigits++;
          return result.textContent = `${numberToDisplay}`;
         }
-    // }if(!storeData['firstNumber']){
-    //     storeData.firstNumber = Number(numberToDisplay);
-    // }if(storeData['firstNumber']){
-    //     storeData.secondNumber = Number(numberToDisplay);
     }if (event.target.classList.contains('operator')){ 
         if(storeData.operatorSymbol){
             storeData.secondNumber = Number(numberToDisplay);
@@ -53,38 +52,64 @@ function chooseOperator(symbol){
       case '+':
          sum();
          break;
+      case 'C':
+         clearAllInputs();
+         break;
+      case 'DEL':
+         deleteLastDigit();
+         break;
    }
    
 }
 
 
-function resetInitialNumbers(){
+function resetOperator(){
    delete storeData.operatorSymbol;
-   firstNumber = 0;
-   lastNumber = 0;
 }
 
 function divide(){
   numberToDisplay = storeData.firstNumber / storeData.secondNumber;
-  resetInitialNumbers();
+  resetOperator();
   return result.textContent = `${numberToDisplay}`;
 };
 
 function multiply(){
     numberToDisplay = storeData.firstNumber * storeData.secondNumber;
-    resetInitialNumbers();
+    resetOperator();
     return result.textContent = `${numberToDisplay}`;
 };
 
 function subtract(){
     numberToDisplay = storeData.firstNumber - storeData.secondNumber;
-    resetInitialNumbers();
+    resetOperator();
     return result.textContent = `${numberToDisplay}`;
 };
 
 function sum(){
-    numberToDisplay = storeData.firstNumber + storeData.secondNumber;
-    resetInitialNumbers();
+    numberToDisplay = Number(storeData.firstNumber) + Number(storeData.secondNumber);
+    resetOperator();
     return result.textContent = `${numberToDisplay}`;
 };
 
+function clearAllInputs(){
+   countDigits = 0;
+   delete storeData['firstNumber'];
+   delete storeData['secondNumber'];
+   resetOperator();
+   numberToDisplay = '';
+   return result.textContent = `${numberToDisplay}`;
+
+}
+
+function deleteLastDigit(){
+   let getAnArray = numberToDisplay.toString().split('');
+   getAnArray.pop();
+   countDigits--;
+   numberToDisplay = Number(getAnArray.join(''));
+   // numberToDisplay = Number(getAnArray);
+   return result.textContent = `${numberToDisplay}`;
+}
+
+function getValueSpec(){
+   chooseOperator(this.textContent);
+}

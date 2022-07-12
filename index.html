@@ -5,29 +5,36 @@
         <link rel="stylesheet" href="style.css">
         <script src="script2.js" defer></script>
         <title>Calculator</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap" rel="stylesheet">
     </head>
     <body>
         <div class="calculator_body">
             <div class="display">
                 <div class="result"></div>
             </div>
-            <div class="all_buttons">
+            <div id="spec_btn" class="reset_backspace">
+                <button class="reset">C</button>
+                <button class="backspace">DEL</button>
+            </div>
+            <div id="all_buttons" class="all_buttons">
                 <button class="digit">7</button>
                 <button class="digit">8</button>
                 <button class="digit">9</button>
-                <button class="operator">/</button>
+                <button class="operator for_hover">/</button>
                 <button class="digit">4</button>
                 <button class="digit">5</button>
                 <button class="digit">6</button>
-                <button class="operator">x</button>
+                <button class="operator for_hover">x</button>
                 <button class="digit">1</button>
                 <button class="digit">2</button>
                 <button class="digit">3</button>
-                <button class="operator">-</button>
+                <button class="operator for_hover">-</button>
                 <button class="digit">0</button>
-                <button class="dot">.</button>
-                <button class="operator_get_result">=</button>
-                <button class="operator">+</button>               
+                <button class="dot for_hover">.</button>
+                <button class="operator_get_result for_hover">=</button>
+                <button class="operator for_hover">+</button>               
             </div>
         </div>
 
