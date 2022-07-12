@@ -75,7 +75,7 @@ body {
     color: white;
 }
 
-.operator, .dot, .operator_get_result {
+.operator, .comma, .operator_get_result {
     background-color: rgb(251, 247, 242);
     color: black;
 }

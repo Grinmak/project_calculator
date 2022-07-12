@@ -17,6 +17,12 @@ const displayLimit = 10;
 let countDigits = 0;
 
 function getValue (event){
+   if(event.target.classList.contains('comma') &&
+      numberToDisplay.length > 0 && !storeData.comma){
+         storeData.comma = true;
+         numberToDisplay += '.';
+         return result.textContent = `${numberToDisplay}`;
+      }
    if (event.target.classList.contains('digit')){
       while(countDigits < displayLimit){
          numberToDisplay += this.textContent;
@@ -28,6 +34,7 @@ function getValue (event){
             storeData.secondNumber = Number(numberToDisplay);
             chooseOperator(storeData.operatorSymbol)
         } 
+      delete storeData.comma;
       storeData.firstNumber = Number(numberToDisplay); 
       countDigits = 0;
       storeData.operatorSymbol = this.textContent;
@@ -38,7 +45,7 @@ function getValue (event){
    }
 }
 
-function chooseOperator(symbol){
+/* function chooseOperator(symbol){
    switch(symbol) {
       case '/':
          divide();
@@ -60,13 +67,22 @@ function chooseOperator(symbol){
          break;
    }
    
+} */
+function chooseOperator(symbol){
+   if(symbol === '/') {numberToDisplay = storeData.firstNumber / storeData.secondNumber};
+   if(symbol === 'x') {numberToDisplay = storeData.firstNumber * storeData.secondNumber};
+   if(symbol === '-') {numberToDisplay = storeData.firstNumber - storeData.secondNumber};
+   if(symbol === '+') {numberToDisplay = storeData.firstNumber + storeData.secondNumber};
+   if(symbol === 'C') {clearAllInputs()};
+   if(symbol === 'DEL') {deleteLastDigit()};
+   resetOperator();
+   return result.textContent = `${numberToDisplay}`;                
 }
-
 
 function resetOperator(){
    delete storeData.operatorSymbol;
 }
-
+/*
 function divide(){
   numberToDisplay = storeData.firstNumber / storeData.secondNumber;
   resetOperator();
@@ -89,12 +105,13 @@ function sum(){
     numberToDisplay = Number(storeData.firstNumber) + Number(storeData.secondNumber);
     resetOperator();
     return result.textContent = `${numberToDisplay}`;
-};
+}; */
 
 function clearAllInputs(){
    countDigits = 0;
    delete storeData['firstNumber'];
    delete storeData['secondNumber'];
+   delete storeData['comma'];
    resetOperator();
    numberToDisplay = '';
    return result.textContent = `${numberToDisplay}`;
