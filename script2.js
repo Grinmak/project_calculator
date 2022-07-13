@@ -55,6 +55,9 @@ function keyBoardInput(event) {
 
 
 function getValue (event){
+   // if(storeData.result === true){
+   //    numberToDisplay = '';
+   // };
    if(event.target.classList.contains('comma') &&
       numberToDisplay.length > 0 && !storeData.comma){
          storeData.comma = true;
@@ -67,6 +70,7 @@ function getValue (event){
          countDigits++;
          return result.textContent = `${numberToDisplay}`;
         }
+       //storeData.result = false;
     }if (event.target.classList.contains('operator')){ 
         if(storeData.operatorSymbol  && numberToDisplay.length > 0){
             storeData.secondNumber = Number(numberToDisplay);
@@ -77,9 +81,11 @@ function getValue (event){
             storeData.firstNumber = Number(numberToDisplay); 
          }
       countDigits = 0;
-      storeData.operatorSymbol = this.textContent; // не убирать глубже в if
+      storeData.operatorSymbol = this.textContent;
+      if(storeData.firstNumber){storeData.firstNumber = Number(numberToDisplay)};
       numberToDisplay = '';   
     }else if (event.target.classList.contains ('operator_get_result')){
+     // storeData.result = true;
       storeData.secondNumber = Number(numberToDisplay);
       chooseOperator(storeData.operatorSymbol);
    }
