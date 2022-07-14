@@ -7,7 +7,7 @@ const storeData = {};
 const displayLimit = 9;
 let countDigits = 0;
 
-
+//setup event listeners
 const result = document.querySelector('.result');
 const allButtons = document.getElementById('all_buttons').querySelectorAll('button');
 allButtons.forEach(btn => btn.addEventListener('click', getValue));
@@ -17,8 +17,12 @@ twoSpecialButton.forEach(btn => btn.addEventListener('click', getValueSpec));
 
 window.addEventListener('keydown', keyBoardInput);
 
+//then keyboard pushed
 function keyBoardInput(event) {
-  console.log(event.key);
+  if(storeData.enterActivated === true && Number(event.key) || event.key === '0'){
+   numberToDisplay = '';
+   storeData.enterActivated = false;
+  }; 
   if(event.key === 'Delete') {chooseOperator('C')};
   if(event.key === 'Backspace'){chooseOperator('DEL')}
   if(event.key === '.' && numberToDisplay.length > 0 && !storeData.comma){
@@ -46,18 +50,21 @@ function keyBoardInput(event) {
          }
        countDigits = 0;
        storeData.operatorSymbol = event.key;
+       if(storeData.firstNumber){storeData.firstNumber = Number(numberToDisplay)};
        numberToDisplay = '';   
    }else if (event.key === 'Enter'){
+      storeData.enterActivated = true;
       storeData.secondNumber = Number(numberToDisplay);
-      chooseOperator(storeData.operatorSymbol);
+      chooseOperator(storeData.operatorSymbol);     
    }
 };
 
-
+//on screen buttons actions
 function getValue (event){
-   // if(storeData.result === true){
-   //    numberToDisplay = '';
-   // };
+   if(storeData.enterActivated === true && event.target.classList.contains('digit')){
+      numberToDisplay = '';
+      storeData.enterActivated = false;
+     }; 
    if(event.target.classList.contains('comma') &&
       numberToDisplay.length > 0 && !storeData.comma){
          storeData.comma = true;
@@ -70,7 +77,6 @@ function getValue (event){
          countDigits++;
          return result.textContent = `${numberToDisplay}`;
         }
-       //storeData.result = false;
     }if (event.target.classList.contains('operator')){ 
         if(storeData.operatorSymbol  && numberToDisplay.length > 0){
             storeData.secondNumber = Number(numberToDisplay);
@@ -85,12 +91,13 @@ function getValue (event){
       if(storeData.firstNumber){storeData.firstNumber = Number(numberToDisplay)};
       numberToDisplay = '';   
     }else if (event.target.classList.contains ('operator_get_result')){
-     // storeData.result = true;
+      storeData.enterActivated = true;
       storeData.secondNumber = Number(numberToDisplay);
-      chooseOperator(storeData.operatorSymbol);
+      chooseOperator(storeData.operatorSymbol);    
    }
 }
 
+//calculation
 function chooseOperator(symbol){
    if(symbol !== 'DEL'){
       if(symbol === '/') {numberToDisplay = storeData.firstNumber / storeData.secondNumber};
@@ -100,9 +107,7 @@ function chooseOperator(symbol){
       if(symbol == 'C') {clearAllInputs()};
       resetOperator();
    }else if(symbol == 'DEL') {deleteLastDigit()};
-   // numberToDisplay = parseFloat(numberToDisplay).toFixed(7);
-   // let numToString = String(numberToDisplay).slice(0, 10);
-   // numberToDisplay = Number(numToString);
+   numberLimit();
    return result.textContent = `${numberToDisplay}`;                
 }
 
@@ -127,10 +132,23 @@ function deleteLastDigit(){
    countDigits--;
    numberToDisplay = Number(getAnArray.join(''));
    storeData.secondNumber = Number(numberToDisplay);
-   // numberToDisplay = Number(getAnArray);
+   if(numberToDisplay === 0){
+      numberToDisplay = '';
+   };
    return result.textContent = `${numberToDisplay}`;
 }
 
 function getValueSpec(){
    chooseOperator(this.textContent);
+}
+
+function numberLimit(){
+   let resultToString = String(numberToDisplay);
+   if(resultToString.length > 9){
+      resultToString = String(numberToDisplay).slice(0, 10);
+      numberToDisplay = Number(resultToString);
+   } 
+   // numberToDisplay = parseFloat(numberToDisplay).toFixed(7);
+   // let numToString = String(numberToDisplay).slice(0, 10);
+   // numberToDisplay = Number(numToString);
 }
