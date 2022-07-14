@@ -148,7 +148,4 @@ function numberLimit(){
       resultToString = String(numberToDisplay).slice(0, 10);
       numberToDisplay = Number(resultToString);
    } 
-   // numberToDisplay = parseFloat(numberToDisplay).toFixed(7);
-   // let numToString = String(numberToDisplay).slice(0, 10);
-   // numberToDisplay = Number(numToString);
 }
